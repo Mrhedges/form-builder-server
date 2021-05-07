@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String   @db.VarChar(255)
+  content   String?
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
+model Profile {
+  id     String  @id @default(uuid())
+  bio    String?
+  user   User    @relation(fields: [userId], references: [id])
+  userId String  @unique
+}
+
+model User {
+  id      String   @id @default(uuid())
+  email   String   @unique
+  name    String?
+  posts   Post[]
+  profile Profile?
+}
+
+model FormInput {
+  id                   String        @id @default(uuid())
+    createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  label                String
+  requiredExpression   String?
+  visibilityExpression String?
+  valueExpression      String
+  inputType            FormInputType @relation(fields: [formInputTypeId], references: [id])
+  schema               FormSchema    @relation(fields: [formSchemaId], references: [id])
+  formInputTypeId      String
+  formSchemaId         String
+}
+
+model FormInputType {
+  id        String      @id @default(uuid())
+  name      String      @unique
+  FormInput FormInput[]
+}
+
+model FormSchema {
+  id        String      @id @default(uuid())
+    createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String      @unique
+  FormInput FormInput[]
+}
+
+model Form {
+  id        String      @id @default(uuid())
+    createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  value Json
+
+}
