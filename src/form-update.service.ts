@@ -6,9 +6,9 @@ import { FormUpdateCommand } from './form-update.command';
 export class FormUpdateService {
   constructor(private commandBus: CommandBus) {}
 
-  async killDragon(formId: string, killDragonDto: KillDragonDto) {
-    return this.commandBus.execute(
-      new FormUpdateCommand(formId, killDragonDto.dragonId)
-    );
-  }
+  // async killDragon(formId: string) {
+  //   return this.commandBus.execute(
+  //     new FormUpdateCommand(formId)
+  //   );
+  // }
 }

@@ -94,6 +94,12 @@ export class FormInput {
   @Column({ type: 'enum', enum: ArrayItemDataType })
   public itemDataType: ArrayItemDataType;
 
+  @Column({ type: 'integer' })
+  public sinceMajor: number;
+
+  @Column({ type: 'integer' })
+  public sinceMinor: number;
+
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt: Date;
 

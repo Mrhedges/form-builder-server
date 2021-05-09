@@ -7,52 +7,42 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { UserService } from './user.service';
 import { FormSchemaService } from './form-schema.service';
-import { FormSchema as FormSchemaModel } from '@prisma/client';
 
 @Controller()
 export class FormSchemaController {
   constructor(
-    private readonly userService: UserService,
     private readonly formSchemaService: FormSchemaService,
   ) {}
 
   @Get('schemas')
-  async getSchemas(): Promise<FormSchemaModel[]> {
-    return this.formSchemaService.formSchemas({});
+  async getSchemas(): Promise<any> {
+    await 1;
   }
 
   @Get('schemas/:id')
-  async getSchemaById(@Param('id') id: string): Promise<FormSchemaModel> {
-    return this.formSchemaService.formSchema({ id });
+  async getSchemaById(@Param('id') id: string): Promise<any> {
+    await 1;
   }
 
 
   @Post('schemas')
   async createDraft(
     @Body() postData: { title: string; content?: string; authorEmail: string },
-  ): Promise<FormSchemaModel> {
-    const { title, content, authorEmail } = postData;
-    return this.formSchemaService.createFormSchema({
-      title,
-      content,
-      author: {
-        connect: { email: authorEmail },
-      },
-    });
+  ): Promise<any> {
+    await 1;
   }
 
   @Put('schemas/:id')
   async updateFormSchema(
     @Param('id') id: string,
     @Body() schemaData: { name?: string },
-  ): Promise<FormSchemaModel> {
-    return this.formSchemaService.updateFormSchema({ where: { id }, data: schemaData });
+  ): Promise<any> {
+    await 1;
   }
 
   @Delete('schemas/:id')
-  async deletePost(@Param('id') id: string): Promise<FormSchemaModel> {
-    return this.formSchemaService.deleteFormSchema({ id });
+  async deletePost(@Param('id') id: string): Promise<any> {
+    await 1;
   }
 }
